@@ -1,0 +1,2 @@
+module HoudiniRails
+end
