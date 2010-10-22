@@ -35,6 +35,7 @@ module Houdini
 
     def generate_form_html(template_path)
       template = Tilt.new(File.join(Rails.root.to_s, template_path))
+      # TODO: don't force the template name
       template.render(self, self.class.name.downcase.to_sym => self)
     end
   end
