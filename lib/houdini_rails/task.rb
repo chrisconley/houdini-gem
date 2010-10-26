@@ -4,7 +4,7 @@ module Houdini
 
     def initialize(name, options)
       @name = name
-      @api = "simple" # options[:strategy]
+      @api = options[:api] || "simple"
       @on = options[:on] || :after_create
       @if = options[:if] || true
       @price = options[:price]
