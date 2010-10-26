@@ -14,13 +14,17 @@ module Houdini
 
     def send_to_houdini(task_name)
       # TODO: look up task when multiple tasks per model are implemented
-      result = Houdini::Base.request(houdini_task.api,
+      params = {
         :api_key => Houdini::KEY,
         :identifier => houdini_task.name,
         :price => houdini_task.price,
         :title => houdini_task.title,
         :form_html => generate_form_html(houdini_task.form_template),
-        :postback_url => houdini_postbacks_url(self.class.name, self.id, self.houdini_task.name, :host => Houdini::RAILS_HOST))
+        :postback_url => houdini_postbacks_url(self.class.name, self.id, self.houdini_task.name, :host => Houdini::RAILS_HOST)
+      }
+      params[:matched_answers_size] = houdini_task.matched_answers_size if houdini_task.matched_answers_size
+
+      result = Houdini::Base.request(houdini_task.api, params)
 
       call_after_submit
     end
