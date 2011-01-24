@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{houdini-rails3}
-  s.version = "0.1.4"
+  s.version = "0.1.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chris Conley"]
-  s.date = %q{2010-10-25}
+  s.date = %q{2011-01-24}
   s.description = %q{Rails 3 Engine for using the Houdini Mechanical Turk API}
   s.email = %q{chris@chrisconley.me}
   s.extra_rdoc_files = [
