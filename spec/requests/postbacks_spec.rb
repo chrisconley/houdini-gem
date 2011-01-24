@@ -7,7 +7,7 @@ describe "Postbacks" do
 
   it "should receive postback" do
     p = Post.create(:image_url => 'http://google.com', :flagged => nil)
-    post "houdini/post/#{p.id}/review_image/postbacks", :flagged => "yes"
+    post "houdini/post/#{p.id}/image_moderation/postbacks", :flagged => "yes"
 
     p.reload
 
