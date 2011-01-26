@@ -18,7 +18,7 @@ module Houdini
       end
 
       def houdini_tasks
-        @houdini_task ||= {}
+        @houdini_tasks ||= {}
       end
 
     end
@@ -28,11 +28,16 @@ module Houdini
       params = {
         :api_key => Houdini::KEY,
         :identifier => houdini_task.name,
-        :price => houdini_task.price,
-        :title => houdini_task.title,
-        :form_html => generate_form_html(houdini_task.form_template),
         :postback_url => houdini_postbacks_url(self.class.name, self.id, houdini_task.name, :host => Houdini::RAILS_HOST)
       }
+      params[:price] = houdini_task.price if houdini_task.price
+      params[:title] = houdini_task.title if houdini_task.title
+      params[:form_html] = generate_form_html(houdini_task.form_template) if houdini_task.form_template
+      if houdini_task.text #TODO: Refactor this logic and make available on all params
+        params[:text] = houdini_task.text
+        params[:text] = houdini_task.text.call if houdini_task.text.respond_to?(:call)
+        params[:text] = self.send(houdini_task.text) if self.respond_to?(houdini_task.text)
+      end
       params[:matched_answers_size] = houdini_task.matched_answers_size if houdini_task.matched_answers_size
 
       result = Houdini::Base.request(houdini_task.api, params)
