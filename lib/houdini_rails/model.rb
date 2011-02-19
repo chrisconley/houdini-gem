@@ -39,6 +39,7 @@ module Houdini
         params[:text] = self.send(houdini_task.text) if self.respond_to?(houdini_task.text)
       end
       params[:matched_answers_size] = houdini_task.matched_answers_size if houdini_task.matched_answers_size
+      params[:max_iterations] = houdini_task.max_iterations if houdini_task.max_iterations
 
       result = Houdini::Base.request(houdini_task.api, params)
 
