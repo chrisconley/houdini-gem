@@ -14,7 +14,7 @@ module Houdini
       @after_submit = options[:after_submit]
       @on_task_completion = options[:on_task_completion] || :update_attributes
       @matched_answers_size = options[:matched_answers_size]
-      @max_iterations = option[:max_iterations]
+      @max_iterations = options[:max_iterations]
     end
   end
 end
