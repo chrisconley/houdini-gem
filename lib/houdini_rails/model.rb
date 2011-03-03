@@ -26,7 +26,7 @@ module Houdini
     def send_to_houdini(task_name)
       houdini_task = self.class.houdini_tasks[task_name.to_sym]
       params = {
-        :api_key => Houdini::KEY,
+        # :api_key => Houdini::KEY,
         :identifier => houdini_task.name,
         :postback_url => houdini_postbacks_url(self.class.name, self.id, houdini_task.name, :host => Houdini::RAILS_HOST)
       }
