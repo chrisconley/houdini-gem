@@ -40,6 +40,9 @@ module Houdini
       end
       params[:matched_answers_size] = houdini_task.matched_answers_size if houdini_task.matched_answers_size
       params[:max_iterations] = houdini_task.max_iterations if houdini_task.max_iterations
+      params[:product_name] = houdini_task.product_name if houdini_task.product_name
+      params[:product_brand] = houdini_task.product_brand if houdini_task.product_brand
+      params[:product_url] = houdini_task.product_url if houdini_task.product_url
 
       result = Houdini::Base.request(houdini_task.api, params)
 
