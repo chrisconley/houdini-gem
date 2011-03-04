@@ -33,16 +33,17 @@ module Houdini
       params[:price] = houdini_task.price if houdini_task.price
       params[:title] = houdini_task.title if houdini_task.title
       params[:form_html] = generate_form_html(houdini_task.form_template) if houdini_task.form_template
-      if houdini_task.text #TODO: Refactor this logic and make available on all params
-        params[:text] = houdini_task.text
-        params[:text] = houdini_task.text.call if houdini_task.text.respond_to?(:call)
-        params[:text] = self.send(houdini_task.text) if self.respond_to?(houdini_task.text)
-      end
       params[:matched_answers_size] = houdini_task.matched_answers_size if houdini_task.matched_answers_size
       params[:max_iterations] = houdini_task.max_iterations if houdini_task.max_iterations
-      params[:product_name] = houdini_task.product_name if houdini_task.product_name
-      params[:product_brand] = houdini_task.product_brand if houdini_task.product_brand
-      params[:product_url] = houdini_task.product_url if houdini_task.product_url
+
+      [:text, :product_name, :product_brand, :product_url].each do |attribute|
+        houdini_attribute = houdini_task.send(attribute)
+        if houdini_attribute #TODO: Refactor this logic and make available on all params
+          params[attribute] = houdini_attribute
+          params[attribute] = houdini_attribute.call if houdini_attribute.respond_to?(:call)
+          params[attribute] = self.send(houdini_attribute) if self.respond_to?(houdini_attribute)
+        end
+      end
 
       result = Houdini::Base.request(houdini_task.api, params)
 
