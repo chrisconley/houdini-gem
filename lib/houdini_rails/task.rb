@@ -1,6 +1,6 @@
 module Houdini
   class Task
-    attr_accessor :name, :api, :on, :if, :price, :title, :form_template, :text, :after_submit, :on_task_completion, :matched_answers_size, :max_iterations
+    attr_accessor :name, :api, :on, :if, :price, :title, :form_template, :text, :after_submit, :on_task_completion, :matched_answers_size, :max_iterations, :product_name, :product_brand, :product_url
 
     def initialize(name, options)
       @name = name
