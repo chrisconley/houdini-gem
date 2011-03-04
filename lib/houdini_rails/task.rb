@@ -10,7 +10,9 @@ module Houdini
       @price = options[:price]
       @title = options[:title]
       @form_template = options[:form_template]
-      @text = options[:text]
+      [:text, :product_name, :product_brand, :product_url].each do |attribute|
+        self.send("#{attribute}=", options[attribute])
+      end
       @after_submit = options[:after_submit]
       @on_task_completion = options[:on_task_completion] || :update_attributes
       @matched_answers_size = options[:matched_answers_size]
