@@ -5,6 +5,8 @@ module Houdini
 
   class Base
     def self.request(api, params)
+      puts "$$$"
+      puts "sending #{params.inspect} to houdini"
       validate_constants
       return ["200", '{success:"true"}'] if HOST == 'test'
       # url = URI.parse("http://#{HOST}/api/v0/#{api}/tasks/")
