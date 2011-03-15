@@ -36,7 +36,7 @@ module Houdini
       params[:matched_answers_size] = houdini_task.matched_answers_size if houdini_task.matched_answers_size
       params[:max_iterations] = houdini_task.max_iterations if houdini_task.max_iterations
 
-      [:text, :product_name, :product_brand, :product_url].each do |attribute|
+      [:original_text, :text, :product_name, :product_brand, :product_url].each do |attribute|
         houdini_attribute = houdini_task.send(attribute)
         if houdini_attribute #TODO: Refactor this logic and make available on all params
           params[attribute] = houdini_attribute

@@ -44,7 +44,7 @@ module Dummy
 
     config.after_initialize do
       Houdini::KEY = 'sandbox'
-      Houdini::HOST = 'houdini-sandbox.heroku.com'
+      Houdini::HOST = 'houdini2-sandbox.heroku.com'
       Houdini::RAILS_HOST = 'localhost:3000'
     end
   end
