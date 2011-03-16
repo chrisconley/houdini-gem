@@ -6,13 +6,13 @@ module Houdini
 
   class Base
     def self.request(api, params)
-      puts "sending #{params.inspect} to houdini"
+      puts "sending #{params.to_json} to houdini"
       validate_constants
-      return ["200", '{success:"true"}'] if HOST == 'test'
       #uri = URI.parse("http://#{HOST}/api/v0/#{api}/tasks/")
       url = File.join("http://", HOST, api)
       uri = URI.parse(url)
-      response, body = Net::HTTP.post_form(uri, params)
+      http = Net::HTTP.new(uri.host, uri.port)
+      response, body = http.post(uri.path, params.to_json)
 
       raise(AuthenticationError, "invalid api key") if response.code == '403'
       if response.code != "200"

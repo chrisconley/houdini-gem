@@ -11,7 +11,7 @@ describe "Text Classification" do
     p.reload
     p.houdini_request_sent_at.to_date.should == Time.now.to_date
 
-    post "houdini/product_review/#{p.id}/text_classification/postbacks", :category => "spam"
+    post "houdini/product_review/#{p.id}/text_classification/postbacks", {:category => "spam"}.to_json
 
     p.reload
     p.category.should == "spam"

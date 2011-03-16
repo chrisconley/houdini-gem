@@ -11,7 +11,7 @@ describe "Text Classification" do
     p.reload
     p.houdini_request_sent_at.to_date.should == Time.now.to_date
 
-    post "houdini/article/#{p.id}/edit_for_grammar/postbacks", :edited_text => "This is incorrect."
+    post "houdini/article/#{p.id}/edit_for_grammar/postbacks", {:edited_text => "This is incorrect."}.to_json
 
     p.reload
     p.edited_text.should == "This is incorrect."
