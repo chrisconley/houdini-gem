@@ -3,7 +3,7 @@ class ProductReview < ActiveRecord::Base
 
   houdini :text_classification,
     :text => :original_text,
-    :api => "classifications",
+    :api => "classification",
     :after_submit => :update_houdini_attributes,
     :on_task_completion => :process_image_moderation_answer
 

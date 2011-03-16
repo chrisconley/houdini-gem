@@ -9,7 +9,7 @@ module Houdini
       puts "sending #{params.to_json} to houdini"
       validate_constants
       #uri = URI.parse("http://#{HOST}/api/v0/#{api}/tasks/")
-      url = File.join("http://", HOST, api)
+      url = File.join("http://", HOST, "tasks", api)
       uri = URI.parse(url)
       http = Net::HTTP.new(uri.host, uri.port)
       response, body = http.post(uri.path, params.to_json)
