@@ -2,8 +2,10 @@ class Article < ActiveRecord::Base
   include Houdini::Model
 
   houdini :edit_for_grammar,
-    :original_text => :original_text,
-    :api => "grammar",
+    :version => 1,
+    :task_info => {
+      'original_text' => :original_text,
+    },
     :after_submit => :update_houdini_attributes,
     :on_task_completion => :process_houdini_edited_text
 

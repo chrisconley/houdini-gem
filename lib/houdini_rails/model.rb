@@ -26,26 +26,24 @@ module Houdini
     def send_to_houdini(task_name)
       houdini_task = self.class.houdini_tasks[task_name.to_sym]
       params = {
-        # :api_key => Houdini::KEY,
-        :identifier => houdini_task.name,
-        :postback_url => houdini_postbacks_url(self.class.name, self.id, houdini_task.name, :host => Houdini::RAILS_HOST)
+        :environment => Houdini.environment,
+        :api_key => Houdini.api_key,
+        :task_design => houdini_task.short_name,
+        :task_design_version => houdini_task.version,
+        :postback_url => houdini_postbacks_url(self.class.name, self.id, houdini_task.short_name, :host => Houdini.app_host)
       }
-      params[:price] = houdini_task.price if houdini_task.price
-      params[:title] = houdini_task.title if houdini_task.title
-      params[:form_html] = generate_form_html(houdini_task.form_template) if houdini_task.form_template
-      params[:matched_answers_size] = houdini_task.matched_answers_size if houdini_task.matched_answers_size
-      params[:max_iterations] = houdini_task.max_iterations if houdini_task.max_iterations
 
-      [:original_text, :text, :product_name, :product_brand, :product_url].each do |attribute|
-        houdini_attribute = houdini_task.send(attribute)
-        if houdini_attribute #TODO: Refactor this logic and make available on all params
-          params[attribute] = houdini_attribute
-          params[attribute] = houdini_attribute.call if houdini_attribute.respond_to?(:call)
-          params[attribute] = self.send(houdini_attribute) if self.respond_to?(houdini_attribute)
-        end
+      params[:task_info] = houdini_task.task_info.inject({}) do |hash, (info_name, model_attribute)|
+        debugger
+        hash[info_name] = model_attribute
+        hash[info_name] = model_attribute.call if model_attribute.respond_to?(:call)
+        hash[info_name] = self.send(model_attribute) if self.respond_to?(model_attribute)
+        hash
       end
 
-      result = Houdini::Base.request(houdini_task.api, params)
+      puts params.inspect
+
+      result = Houdini::Base.request(params)
 
       call_after_submit(task_name)
     end
