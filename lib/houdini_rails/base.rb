@@ -12,17 +12,17 @@ module Houdini
       puts "sending #{params.to_json} to houdini"
       validate_config
 
-      # url = File.join("https://", HOST, "tasks")
-      # uri = URI.parse(url)
-      # http = Net::HTTP.new(uri.host, uri.port)
-      # http.use_ssl = true
-      # response, body = http.post(uri.path, params.to_json)
-      #
-      # if response.code != "200"
-      #   raise RequestError, "The request to houdini failed with code #{response.code}: #{body}"
-      # end
-      #
-      # [response, body]
+      url = File.join("https://", HOST, "tasks")
+      uri = URI.parse(url)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      response, body = http.post(uri.path, params.to_json)
+
+      if response.code != "200"
+        raise RequestError, "The request to houdini failed with code #{response.code}: #{body}"
+      end
+
+      [response, body]
     end
 
     private
