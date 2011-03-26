@@ -12,7 +12,7 @@ module Houdini
       puts "sending #{params.to_json} to houdini"
       validate_config
 
-      url = File.join("https://", HOST, "tasks")
+      url = File.join("https://", HOST, "tasks.json")
       uri = URI.parse(url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
