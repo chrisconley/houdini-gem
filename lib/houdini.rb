@@ -1,18 +1,16 @@
 require 'net/https'
 require 'uri'
 
-require 'tilt'
+require 'houdini/base'
+require 'houdini/model'
+require 'houdini/task'
 
-require 'houdini_rails/base'
-require 'houdini_rails/model'
-require 'houdini_rails/task'
-
-require 'houdini_rails/engine'
+require 'houdini/engine'
 
 
 module Houdini
   mattr_accessor :environment, :api_key, :app_host
-  # Convenience method
+  # Convenience methods
   def self.perform!(task_name, object)
     object.send_to_houdini(task_name)
   end

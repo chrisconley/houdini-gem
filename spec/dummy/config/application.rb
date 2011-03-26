@@ -7,7 +7,7 @@ require "action_view/railtie"
 require "action_mailer/railtie"
 
 Bundler.require
-require "houdini_rails"
+require "houdini"
 
 module Dummy
   class Application < Rails::Application

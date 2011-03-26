@@ -34,14 +34,11 @@ module Houdini
       }
 
       params[:task_info] = houdini_task.task_info.inject({}) do |hash, (info_name, model_attribute)|
-        debugger
         hash[info_name] = model_attribute
         hash[info_name] = model_attribute.call if model_attribute.respond_to?(:call)
         hash[info_name] = self.send(model_attribute) if self.respond_to?(model_attribute)
         hash
       end
-
-      puts params.inspect
 
       result = Houdini::Base.request(params)
 
@@ -56,12 +53,6 @@ module Houdini
     def call_after_submit(task_name)
       houdini_task = self.class.houdini_tasks[task_name.to_sym]
       self.send(houdini_task.after_submit) if houdini_task.after_submit
-    end
-
-    def generate_form_html(template_path)
-      template = Tilt.new(File.join(Rails.root.to_s, template_path))
-      # TODO: don't force the template name
-      template.render(self, self.class.name.downcase.to_sym => self)
     end
   end
 end
