@@ -44,7 +44,7 @@ module Dummy
 
     Houdini.setup(:sandbox,
       :api_key => "wOVK7OFeRJVfmjqBk603",
-      :app_host => 'example.com'
+      :app_host => 'http://example.com'
     )
 
   end
