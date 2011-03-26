@@ -1,10 +1,8 @@
 module Houdini
-  Undefined = Class.new(NameError)
   RequestError = Class.new(NameError)
-  AuthenticationError = Class.new(NameError)
   HostError = Class.new(NameError)
 
-  HOST = 'houdini2-staging.heroku.com'
+  HOST = 'v0.houdiniapi.com'
 
   class Base
     def self.request(params)
