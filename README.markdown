@@ -2,35 +2,37 @@
 
 This ruby gem is a Rails Engine for using the Houdini Mechanical Turk API. It provides easy integration into your models and sets up the necessary controllers to receive answers posted back to your app from Houdini.
 
-Check out the [Houdini Documentation](http://houdinihq.com/documentation) for more info about the API.
+Check out the [Houdini Documentation](http://houdiniapi.com/documentation) for more info about the API.
 
-# Installation (Rails 2.3.x)
+# Installation (Rails 3.0.x)
 
 Add the gem to your Gemfile
 
-    gem 'houdini-rails'
+    gem 'houdini'
 
 Configure a few constants in config/application.rb
 
     config.after_initialize do
-      ::Houdini::KEY = 'YOUR_API_KEY'
-      ::Houdini::HOST = 'houdinihq.com' # or 'houdini-sandbox.heroku.com' for testing
-      ::Houdini::RAILS_HOST = 'your_app_domain.com'
+      Houdini.setup(:sandbox, :api_key => 'YOUR_API_KEY', :app_host => 'https://your-app-domain.com')
     end
 
-You may want to configure the Houdini constants differently for each of you environments.
+You may want to configure Houdini differently for each of you environments.
 
 # Example Usage
+
+Create a task design at https://admin.houdiniapi.com
 
 Setup Houdini in your ActiveRecord model:
 
     class Post < ActiveRecord::Base
       include Houdini::Model
 
-      houdini :image_moderation,
-        :price => '0.01',
-        :title => 'Please moderate image',
-        :form_template => 'app/views/houdini_templates/post.html.erb',
+      houdini :image_moderation, # short_name of task_design
+        :task_info => {
+          :image_url => "http://example.com/image12345.jpg"
+        },
+        :version => 1,
+        :after_submit => :update_houdini_attributes,
         :on_task_completion => :process_image_moderation_answer
 
       after_create :moderate_image
@@ -39,33 +41,19 @@ Setup Houdini in your ActiveRecord model:
         Houdini.perform!(:image_moderation, self)
       end
 
+      def update_houdini_attributes
+        update_attribute(:houdini_request_sent_at, Time.now)
+      end
+
       def process_image_moderation_answer(params)
-        update_attribute(:flagged => params[:flagged])
+        update_attribute(:flagged => params[:category] == 'flagged')
       end
     end
 
-Create a template for the form to be sent to Mechanical Turk:
-
-    <!--app/views/houdini_templates/post.html.erb -->
-
-    <h2>Review the image for offensiveness</h2>
-
-    <h3>Instructions</h3>
-    <p>Please review the image below.</p>
-
-    <img src="<%= post.image_url %>"><br/>
-
-    <input type="radio" name="flagged" value="yes" class="required">
-      Yes, this picture is offensive
-    </input>
-
-    <input type="radio" name="flagged" value="no" class="required">
-      No, this picture is okay
-    </input>
 
 Post.houdini class method options:
 
-* :price - Amount in cents you want to pay for the task to be completed
-* :title - Title that Mechanical Turk workers will see when browsing/searching available tasks
-* :form_template - ERB or HAML template used to render the form html.
-* :on_task_completion - Method that Houdini should call when the answer is posted back to your app. The results of your form will be passed into the method as the only parameter. `{:flagged => 'yes'}` in the example above.
+* :task_info - Any task specific info needed to populate your template you created when you created the task design.
+* :version - Version of the task design to use
+* :after_submit - Method that should be called after submitting the task to Houdini.
+* :on_task_completion - Method that should be called when the answer is posted back to your app.
