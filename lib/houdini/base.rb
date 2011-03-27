@@ -26,7 +26,8 @@ module Houdini
     private
 
     def self.validate_config
-      raise HostError, "Houdini.app_host should specify http:// or https://" unless Houdini.app_host.match(/^https?\:\/\//)
+      #TODO: validate params in Houdini.setup
+      raise HostError, "Houdini.app_url should specify http:// or https://" unless Houdini.app_url.match(/^https?\:\/\//)
     end
   end
 
