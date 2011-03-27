@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    houdini (0.2.2)
+    houdini (0.2.3)
       rails (~> 3.0.0)
 
 GEM
