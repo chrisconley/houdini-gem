@@ -13,7 +13,7 @@ describe "Text Classification" do
     params = {
       "api_key" => Houdini.api_key,
       "environment" => Houdini.environment,
-      "postback_url" => "http://#{Houdini.app_host}/houdini/Article/1/edit_for_grammar/postbacks",
+      "postback_url" => "http://example.com:80/houdini/Article/1/edit_for_grammar/postbacks",
       "task_design" => "edit_for_grammar",
       "task_design_version" => 1,
       "task_info" => {

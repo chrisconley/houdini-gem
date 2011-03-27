@@ -9,7 +9,7 @@ require 'houdini/engine'
 
 
 module Houdini
-  mattr_accessor :environment, :api_key, :app_host
+  mattr_accessor :environment, :api_key, :app_url, :app_uri
   # Convenience methods
   def self.perform!(task_name, object)
     object.send_to_houdini(task_name)
@@ -18,6 +18,7 @@ module Houdini
   def self.setup(environment, options)
     self.environment = environment.to_s
     self.api_key = options[:api_key]
-    self.app_host = options[:app_host]
+    self.app_url = options[:app_host] || options[:app_url]
+    self.app_uri = URI.parse(self.app_url)
   end
 end

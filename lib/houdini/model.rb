@@ -30,7 +30,11 @@ module Houdini
         :api_key => Houdini.api_key,
         :task_design => houdini_task.short_name,
         :task_design_version => houdini_task.version,
-        :postback_url => houdini_postbacks_url(self.class.name, self.id, houdini_task.short_name, :host => Houdini.app_host)
+        :postback_url => houdini_postbacks_url(self.class.name, self.id, houdini_task.short_name, {
+          :protocol => Houdini.app_uri.scheme,
+          :host => Houdini.app_uri.host,
+          :port => Houdini.app_uri.port
+        })
       }
 
       params[:task_info] = houdini_task.task_info.inject({}) do |hash, (info_name, model_attribute)|
