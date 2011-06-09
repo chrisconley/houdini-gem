@@ -14,6 +14,7 @@ module Houdini
       uri = URI.parse(url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       response, body = http.post(uri.path, params.to_json)
 
       if response.code != "200"
