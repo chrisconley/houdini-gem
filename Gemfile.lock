@@ -118,5 +118,6 @@ PLATFORMS
 DEPENDENCIES
   capybara (>= 0.4.1)
   houdini!
+  rake (~> 0.8.7)
   rspec-rails (>= 2.5.0)
   sqlite3-ruby
