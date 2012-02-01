@@ -2,7 +2,7 @@ module Houdini
   RequestError = Class.new(NameError)
   HostError = Class.new(NameError)
 
-  HOST = 'v0.houdiniapi.com'
+  HOST = 'v1.houdiniapi.com'
 
   class Base
     def self.request(params)

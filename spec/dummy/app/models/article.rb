@@ -2,11 +2,10 @@ class Article < ActiveRecord::Base
   include Houdini::Model
 
   houdini :edit_for_grammar,
-    :version => 1,
-    :task_info => {
+    :task_info          => {
       'original_text' => :original_text,
     },
-    :after_submit => :update_houdini_attributes,
+    :after_submit       => :update_houdini_attributes,
     :on_task_completion => :process_houdini_edited_text
 
   after_create :moderate_image, :if => :original_text

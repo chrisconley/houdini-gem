@@ -11,12 +11,11 @@ describe "Text Classification" do
     p.stub!(:id).and_return(1)
 
     params = {
-      "api_key" => Houdini.api_key,
-      "environment" => Houdini.environment,
+      "api_key"      => Houdini.api_key,
+      "environment"  => Houdini.environment,
       "postback_url" => "http://example.com:80/houdini/Article/1/edit_for_grammar/postbacks",
-      "task_design" => "edit_for_grammar",
-      "task_design_version" => 1,
-      "task_info" => {
+      "blueprint"    => "edit_for_grammar",
+      "task_info"    => {
         "original_text" => "This is incorect."
       }
     }.symbolize_keys
