@@ -15,8 +15,10 @@ describe "Text Classification" do
       "environment"  => Houdini.environment,
       "postback_url" => "http://example.com:80/houdini/Article/1/edit_for_grammar/postbacks",
       "blueprint"    => "edit_for_grammar",
-      "task_info"    => {
-        "original_text" => "This is incorect."
+      "input"    => {
+        "input1" => "This is incorect.",
+        "input2" => "This is incorect.",
+        "input3" => "some text"
       }
     }.symbolize_keys
 
@@ -26,7 +28,9 @@ describe "Text Classification" do
     p.reload
     p.houdini_request_sent_at.to_date.should == Time.now.to_date
 
-    post "houdini/article/#{p.id}/edit_for_grammar/postbacks", {:edited_text => "This is incorrect."}.to_json
+    output_params = {"edited_text"=>"This is incorrect."}
+
+    post "houdini/article/#{p.id}/edit_for_grammar/postbacks", params.merge("id" => "000000000000", "status"=>"complete", "output" => output_params, "verbose_output"=> output_params).to_json
 
     p.reload
     p.edited_text.should == "This is incorrect."

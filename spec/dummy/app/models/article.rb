@@ -2,15 +2,15 @@ class Article < ActiveRecord::Base
   include Houdini::Model
 
   houdini :edit_for_grammar,
-    :task_info          => {
-      'original_text' => :original_text,
+    :input => {
+      'input1' => :original_text,
+      'input2' => proc{ original_text },
+      'input3' => "some text"
     },
     :after_submit       => :update_houdini_attributes,
     :on_task_completion => :process_houdini_edited_text
 
-  after_create :moderate_image, :if => :original_text
-
-  def moderate_image
+  after_create do
     Houdini.perform!(:edit_for_grammar, self)
   end
 

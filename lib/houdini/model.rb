@@ -29,11 +29,11 @@ module Houdini
                                                :port     => Houdini.app_uri.port
                                               ),
 
-        :task_info => houdini_task.task_info.inject({}) do |hash, (info_name, model_attribute)|
-          value = if respond_to? model_attribute
+        :input => houdini_task.input.inject({}) do |hash, (info_name, model_attribute)|
+          value = if model_attribute.is_a? Symbol and respond_to? model_attribute
                     send(model_attribute)
                   elsif model_attribute.respond_to? :call
-                    model_attribute.call
+                    instance_eval(&model_attribute)
                   else
                     model_attribute
                   end
@@ -46,8 +46,8 @@ module Houdini
       call_after_submit(task_name)
     end
 
-    def process_postback(task_name, answer)
-      houdini_task = self.class.houdini_tasks[task_name.to_sym]
+    def process_postback(blueprint, answer)
+      houdini_task = self.class.houdini_tasks[blueprint.to_sym]
       self.send(houdini_task.on_task_completion, answer)
     end
 
