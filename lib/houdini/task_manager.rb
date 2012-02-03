@@ -1,5 +1,5 @@
 module Houdini
-	module TaskManager
+  module TaskManager
     def self.register(klass, blueprint, options, task_builder=Task)
       @tasks ||= {}
       @tasks[ [klass.name, blueprint.to_sym] ] = task_builder.new(klass, blueprint, options)
@@ -16,5 +16,5 @@ module Houdini
       task = @tasks[ [class_name, blueprint.to_sym] ]
       task.process id, output
     end
-	end
+  end
 end

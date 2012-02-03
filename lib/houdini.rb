@@ -23,28 +23,28 @@ module Houdini
 
   HOST = 'v1.houdiniapi.com'
 
-	def self.submit!(blueprint, class_name, object_id, input_params)
-		request(
-			:environment  => environment,
-			:api_key      => api_key,
-			:blueprint    => blueprint,
-			:input        => input_params,
-			:postback_url => "#{app_uri.scheme}://#{app_uri.host}:#{app_uri.port}/houdini/#{class_name}/#{object_id}/postbacks"
+  def self.submit!(blueprint, class_name, object_id, input_params)
+    request(
+      :environment  => environment,
+      :api_key      => api_key,
+      :blueprint    => blueprint,
+      :input        => input_params,
+      :postback_url => "#{app_uri.scheme}://#{app_uri.host}:#{app_uri.port}/houdini/#{class_name}/#{object_id}/postbacks"
     )
-	end
+  end
 
-	def self.request(params)
-		# TODO: this should validate sooner
-		raise HostError, "Houdini.app_url should specify http:// or https://" unless app_url.match(/^https?\:\/\//)
+  def self.request(params)
+    # TODO: this should validate sooner
+    raise HostError, "Houdini.app_url should specify http:// or https://" unless app_url.match(/^https?\:\/\//)
 
-		url = File.join("https://", HOST, "tasks.json")
-		uri = URI.parse(url)
-		http = Net::HTTP.new(uri.host, uri.port)
-		http.use_ssl = true
-		http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-		response, body = http.post(uri.path, params.to_json)
-		if response.code != "200"
-			raise RequestError, "The request to houdini failed with code #{response.code}: #{body}"
-		end
-	end
+    url = File.join("https://", HOST, "tasks.json")
+    uri = URI.parse(url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    response, body = http.post(uri.path, params.to_json)
+    if response.code != "200"
+      raise RequestError, "The request to houdini failed with code #{response.code}: #{body}"
+    end
+  end
 end
