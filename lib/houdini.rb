@@ -29,7 +29,7 @@ module Houdini
 			:api_key      => api_key,
 			:blueprint    => blueprint,
 			:input        => input_params,
-			:postback_url => "#{app_uri.scheme}://#{app_uri.host}:#{app_uri.port}/houdini/#{class_name}/#{object_id}/#{blueprint}/postbacks"
+			:postback_url => "#{app_uri.scheme}://#{app_uri.host}:#{app_uri.port}/houdini/#{class_name}/#{object_id}/postbacks"
     )
 	end
 

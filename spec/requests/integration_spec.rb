@@ -12,7 +12,7 @@ describe "Text Classification" do
     params = {
       "api_key"      => Houdini.api_key,
       "environment"  => Houdini.environment,
-      "postback_url" => "http://my-app:3333/houdini/Article/model-slug/edit_for_grammar/postbacks",
+      "postback_url" => "http://my-app:3333/houdini/Article/model-slug/postbacks",
       "blueprint"    => "edit_for_grammar",
       "input"    => {
         "input1" => "This is incorect.",
@@ -29,7 +29,7 @@ describe "Text Classification" do
 
     output_params = {"edited_text"=>"This is incorrect."}
 
-    post "houdini/Article/model-slug/edit_for_grammar/postbacks", params.merge("id" => "000000000000", "status"=>"complete", "output" => output_params, "verbose_output"=> output_params).to_json
+    post "houdini/Article/model-slug/postbacks", params.merge("id" => "000000000000", "status"=>"complete", "output" => output_params, "verbose_output"=> output_params).to_json
 
     article.reload
     article.edited_text.should == "This is incorrect."

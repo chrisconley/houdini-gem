@@ -8,7 +8,7 @@ describe Houdini, ".submit!" do
 			:environment  => "some_environment",
 			:api_key      => "SOME-API-KEY",
 			:blueprint    => :blueprint_name,
-			:postback_url => "http://localhost:3000/houdini/ClassName/42/blueprint_name/postbacks",
+			:postback_url => "http://localhost:3000/houdini/ClassName/42/postbacks",
 			:input        => { :input1 => 1, :input2 => 'two' }
 		}
 
