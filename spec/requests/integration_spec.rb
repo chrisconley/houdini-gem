@@ -2,18 +2,17 @@ require 'spec_helper'
 
 describe "Text Classification" do
   before do
+    Houdini.setup 'production', :app_url => "http://my-app:3333/"
     Article.delete_all
-    Houdini::Base.stub!(:request).and_return(["200", "{response:success}"]) # TODO: VCR
   end
 
   it "should send task to Houdini and properly receive the postback" do
-    p = Article.new(:original_text => 'This is incorect.')
-    p.stub!(:id).and_return(1)
+    article = Article.new :original_text => 'This is incorect.'
 
     params = {
       "api_key"      => Houdini.api_key,
       "environment"  => Houdini.environment,
-      "postback_url" => "http://example.com:80/houdini/Article/1/edit_for_grammar/postbacks",
+      "postback_url" => "http://my-app:3333/houdini/Article/model-slug/edit_for_grammar/postbacks",
       "blueprint"    => "edit_for_grammar",
       "input"    => {
         "input1" => "This is incorect.",
@@ -22,17 +21,17 @@ describe "Text Classification" do
       }
     }.symbolize_keys
 
-    Houdini::Base.should_receive(:request).with(params)
+    Houdini.should_receive(:request).with(params)
 
-    p.save
-    p.reload
-    p.houdini_request_sent_at.to_date.should == Time.now.to_date
+    article.save!
+    article.reload
+    article.houdini_request_sent_at.should == Date.today.to_time
 
     output_params = {"edited_text"=>"This is incorrect."}
 
-    post "houdini/article/#{p.id}/edit_for_grammar/postbacks", params.merge("id" => "000000000000", "status"=>"complete", "output" => output_params, "verbose_output"=> output_params).to_json
+    post "houdini/Article/model-slug/edit_for_grammar/postbacks", params.merge("id" => "000000000000", "status"=>"complete", "output" => output_params, "verbose_output"=> output_params).to_json
 
-    p.reload
-    p.edited_text.should == "This is incorrect."
+    article.reload
+    article.edited_text.should == "This is incorrect."
   end
 end
