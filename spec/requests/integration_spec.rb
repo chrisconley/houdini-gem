@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Text Classification" do
+describe "End-to-end" do
   before do
     Houdini.setup 'production', :app_url => "http://my-app:3333/"
     Article.delete_all

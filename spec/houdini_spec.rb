@@ -16,4 +16,10 @@ describe Houdini, ".submit!" do
 
     Houdini.submit! :blueprint_name, "ClassName", 42, :input1 => 1, :input2 => 'two'
   end
+
+	it "should not send requests if environment is 'test'" do
+    Houdini.setup "test", :api_key => "SOME-API-KEY", :app_url => "http://localhost:3000"
+    Houdini.should_receive(:request).never
+    Houdini.submit! :blueprint_name, "ClassName", 42, :input1 => 1, :input2 => 'two'
+	end
 end

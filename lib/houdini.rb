@@ -24,13 +24,15 @@ module Houdini
   HOST = 'v1.houdiniapi.com'
 
   def self.submit!(blueprint, class_name, object_id, input_params)
-    request(
-      :environment  => environment,
-      :api_key      => api_key,
-      :blueprint    => blueprint,
-      :input        => input_params,
-      :postback_url => "#{app_uri.scheme}://#{app_uri.host}:#{app_uri.port}/houdini/#{class_name}/#{object_id}/postbacks"
-    )
+    unless environment.to_s == 'test'
+      request(
+        :environment  => environment,
+        :api_key      => api_key,
+        :blueprint    => blueprint,
+        :input        => input_params,
+        :postback_url => "#{app_uri.scheme}://#{app_uri.host}:#{app_uri.port}/houdini/#{class_name}/#{object_id}/postbacks"
+      )
+    end
   end
 
   def self.request(params)
