@@ -4,18 +4,19 @@ module Houdini
     protected :options
 
     def initialize(klass, blueprint, options={})
-      @klass              = klass
+      @class_name         = klass.name
       @blueprint          = blueprint.to_s
       @input              = options[:input]
       @after_submit       = options[:after_submit]
-      @on_task_completion = options[:on_task_completion] || :update_attributes
+      @on_task_completion = options[:on_task_completion]
       @finder             = options[:finder] || :find
       @id_method          = options[:id_method] || :id
     end
 
     def process(object_id, results)
-      obj = self.class.callable @klass, @finder, object_id
-      self.class.callable obj, @on_task_completion, results
+      # we have to re-constantize the class name because Rails reloads the classes in development
+      obj = self.class.callable @class_name.constantize, @finder, object_id
+      self.class.callable obj, @on_task_completion, results if @on_task_completion
     end
 
     def submit!(object, options={})
