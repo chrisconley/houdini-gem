@@ -13,10 +13,10 @@ module Houdini
       @id_method          = options[:id_method] || :id
     end
 
-    def process(object_id, results)
+    def process(object_id, results, verbose_results)
       # we have to re-constantize the class name because Rails reloads the classes in development
       obj = self.class.callable @class_name.constantize, @finder, object_id
-      self.class.callable obj, @on_task_completion, results if @on_task_completion
+      self.class.callable obj, @on_task_completion, results, verbose_results  if @on_task_completion
     end
 
     def submit!(object, options={})

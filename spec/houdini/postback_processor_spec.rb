@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Houdini::PostbackProcessor, ".process!" do
   let(:houdini_settings) do
-    {:environment => "production", :api_key => "MY_KEY", :app_url => "http://localhost:3000" }
+    { :environment => "production", :api_key => "MY_KEY", :app_url => "http://localhost:3000" }
   end
   context "when the environments dont match" do
     before do
@@ -27,15 +27,17 @@ describe Houdini::PostbackProcessor, ".process!" do
 
   context "given a classname and id" do
     it "should load the object, and have it process the postback, and return the result" do
-      task_manager = double :task_manager
-      output = double :output
+      task_manager   = double :task_manager
+      output         = double :output
+      verbose_output = double :verbose_output
 
-      task_manager.should_receive(:process).with('MyClass', 42, 'blueprint_name', output)
+      task_manager.should_receive(:process).with('MyClass', 42, 'blueprint_name', output, verbose_output)
 
       Houdini::PostbackProcessor.process 'MyClass', 42, houdini_settings.merge(
-        :blueprint    => 'blueprint_name',
-        :output       => output,
-        :task_manager => task_manager
+        :blueprint      => 'blueprint_name',
+        :output         => output,
+        :verbose_output => verbose_output,
+        :task_manager   => task_manager
       )
     end
   end

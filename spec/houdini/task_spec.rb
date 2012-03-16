@@ -109,17 +109,18 @@ describe Houdini::Task do
 		class TestClass
 		end
 
-    it "should call the callback on the object, giving it the houdini output, and return the result" do
+    it "should call the callback on the object, giving it the houdini output, and verbose output, and return the result" do
       obj = double :obj
-      houdini_output = double :houdini_output
-      process_result = double :process_result
+      houdini_output         = double :houdini_output
+      verbose_houdini_output = double :verbose_houdini_output
+      process_result         = double :process_result
 
       task = Houdini::Task.new TestClass, :blueprint_name, :on_task_completion => :after_houdini_completion, :finder => :custom_finder
 
       TestClass.should_receive(:custom_finder).with(42).and_return(obj)
-      obj.should_receive(:after_houdini_completion).with(houdini_output).and_return(process_result)
+      obj.should_receive(:after_houdini_completion).with(houdini_output, verbose_houdini_output).and_return(process_result)
 
-      task.process 42, houdini_output
+      task.process 42, houdini_output, verbose_houdini_output
     end
 
     it "should reload the class from it's name, so that this can work in Rails dev mode" do
@@ -129,7 +130,7 @@ describe Houdini::Task do
 
       TestClass.should_receive(:find)
 
-      task.process 42, double
+      task.process 42, double, double
     end
   end
 end

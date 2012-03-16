@@ -15,7 +15,7 @@ module Houdini
       #   raise APIKeyMistmatchError, "API key received doesn't match our API key."
       # end
 
-      task_manager.process class_name, model_id, params[:blueprint], params[:output]
+      task_manager.process class_name, model_id, params[:blueprint], params[:output], params[:verbose_output]
     end
   end
 end

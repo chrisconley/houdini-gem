@@ -12,9 +12,9 @@ module Houdini
       end
     end
 
-    def self.process(class_name, id, blueprint, output)
+    def self.process(class_name, id, blueprint, output, verbose_output)
       task = @tasks[ [class_name, blueprint.to_sym] ]
-      task.process id, output
+      task.process id, output, verbose_output
     end
   end
 end
