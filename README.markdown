@@ -18,7 +18,7 @@ You may want to configure Houdini differently for each of you environments.
 
 # Example Usage
 
-Create a task design at http://v1.houdiniapi.com
+Request a beta account at http://houdiniapi.com to gain access to the Houdini Blueprint Editor.
 
 Setup Houdini in your ActiveRecord model:
 
@@ -53,3 +53,11 @@ Setup Houdini in your ActiveRecord model:
 * `:after_submit` - Method that should be called after submitting the task to Houdini. Can by a symbol or a lambda/proc.
 * `:id_method` - Method to get an identifier for the object. It is `id` by default, but you may want to use `to_param` with your app. Can be a symbol or lambda/proc. Use this in conjunction with `:finder`.
 * `:finder` - Method by which to find the model by an identifier. It is `find` by default. Can be a symbol or lambda/proc.  Use this in conjunction with `:id_method`.
+
+## Credits
+
+* Thanks to Mike Nicholaides (https://github.com/nicholaides) for a huge refactoring to bring the gem up to date with the new version of Houdini.
+
+## License
+
+MIT License. Copyright 2012 Houdini Inc. http://houdiniapi.com
