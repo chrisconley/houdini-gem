@@ -1,12 +1,10 @@
 class Houdini::PostbacksController < ApplicationController
-  protect_from_forgery :except => [:create]
+  skip_before_filter :protect_from_forgery
+
   def create
-    object_class = params[:object_class].classify.constantize
-    object = object_class.find(params[:object_id])
-    if object.process_postback(params[:task_name], HashWithIndifferentAccess.new(ActiveSupport::JSON.decode(request.raw_post)))
-      render :json => {:success => true}
-    else
-      render :json => {:success => false}, :status => 422
-    end
+    task_results = HashWithIndifferentAccess.new ActiveSupport::JSON.decode(request.raw_post)
+
+    Houdini::PostbackProcessor.process params[:object_class], params[:object_id], task_results
+    render :json => { :success => true }
   end
 end

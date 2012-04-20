@@ -2,24 +2,22 @@ class Article < ActiveRecord::Base
   include Houdini::Model
 
   houdini :edit_for_grammar,
-    :version => 1,
-    :task_info => {
-      'original_text' => :original_text,
+    :input => {
+      'input1' => :original_text,
+      'input2' => proc{ original_text },
+      'input3' => "some text"
     },
-    :after_submit => :update_houdini_attributes,
-    :on_task_completion => :process_houdini_edited_text
-
-  after_create :moderate_image, :if => :original_text
-
-  def moderate_image
-    Houdini.perform!(:edit_for_grammar, self)
-  end
+    :on                 => :after_create,
+    :after_submit       => :update_houdini_attributes,
+    :on_task_completion => :process_houdini_edited_text,
+    :finder             => lambda{|id| last },
+    :id_method          => lambda{ 'model-slug' }
 
   def update_houdini_attributes
-    update_attribute(:houdini_request_sent_at, Time.now)
+    update_attribute(:houdini_request_sent_at, Date.today.to_time)
   end
 
-  def process_houdini_edited_text(params)
-    update_attribute(:edited_text, params[:edited_text])
+  def process_houdini_edited_text(output, verbose_output)
+    update_attribute(:edited_text, output[:edited_text])
   end
 end
