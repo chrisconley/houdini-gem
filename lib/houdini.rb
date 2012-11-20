@@ -1,5 +1,6 @@
 require 'net/https'
 require 'uri'
+require 'cgi'
 
 require 'houdini/model'
 require 'houdini/task'
@@ -30,7 +31,7 @@ module Houdini
         :api_key      => api_key,
         :blueprint    => blueprint,
         :input        => input_params,
-        :postback_url => "#{app_uri.scheme}://#{app_uri.host}:#{app_uri.port}/houdini/#{class_name}/#{object_id}/postbacks"
+        :postback_url => "#{app_uri.scheme}://#{app_uri.host}:#{app_uri.port}/houdini/#{CGI.escape(class_name)}/#{object_id}/postbacks"
       )
     end
   end
