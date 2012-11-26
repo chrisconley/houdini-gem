@@ -56,6 +56,10 @@ end
 * `:id_method` - Method to get an identifier for the object. It is `id` by default, but you may want to use `to_param` with your app. Can be a symbol or lambda/proc. Use this in conjunction with `:finder`.
 * `:finder` - Method by which to find the model by an identifier. It is `find` by default. Can be a symbol or lambda/proc.  Use this in conjunction with `:id_method`.
 
+# Example Application
+
+An example Rails 3.2 & Mongoid application can be found here: [https://github.com/chrisconley/houdini-rails-32](https://github.com/chrisconley/houdini-rails-32)
+
 ## Credits
 
 * Thanks to Mike Nicholaides (https://github.com/nicholaides) for a huge refactoring to bring the gem up to date with the new version of Houdini.
