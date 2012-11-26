@@ -13,6 +13,7 @@ module Houdini
     end
 
     def self.process(class_name, id, blueprint, output, verbose_output)
+      class_name.constantize # Ensure model is loaded and any Houdini tasks registered
       task = @tasks[ [class_name, blueprint.to_sym] ]
       task.process id, output, verbose_output
     end

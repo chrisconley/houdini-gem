@@ -10,7 +10,7 @@ module Houdini
         raise EnvironmentMismatchError, "Environment received does not match Houdini.environment"
       end
 
-			# # Houdini doesn't send the API key back
+      # # Houdini doesn't send the API key back
       # if params[:api_key] != Houdini.api_key and params[:environment] == "production"
       #   raise APIKeyMistmatchError, "API key received doesn't match our API key."
       # end
