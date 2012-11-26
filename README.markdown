@@ -22,22 +22,24 @@ Request a beta account at http://houdiniapi.com to gain access to the Houdini Bl
 
 Setup Houdini in your ActiveRecord model:
 
-    class Post < ActiveRecord::Base
-      include Houdini::Model
+``` ruby
+class Post < ActiveRecord::Base
+  include Houdini::Model
 
-      houdini :image_moderation,
-        :input => {
-          :image_url => :image_url,                          # call the input_url method for
-          :image_caption => lambda{ self.caption.titleize }, # use a lambda, called in the model's context
-          :image_size => "100x100"                           # just send this string 
-        },
-        :on => :after_create,
-        :on_task_completion => :process_image_moderation_answer
+  houdini :image_moderation,
+    :input => {
+      :image_url => :image_url,                          # call the input_url method for
+      :image_caption => lambda{ self.caption.titleize }, # use a lambda, called in the model's context
+      :image_size => "100x100"                           # just send this string 
+    },
+    :on => :after_create,
+    :on_task_completion => :process_image_moderation_answer
 
-      def process_image_moderation_answer(params, verbose={})
-        update_attribute :flagged => params[:category] == 'flagged'
-      end
-    end
+  def process_image_moderation_answer(params, verbose={})
+    update_attribute :flagged => params[:category] == 'flagged'
+  end
+end
+```
 
 # Usage
 
