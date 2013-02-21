@@ -1,8 +1,9 @@
+[![Build Status](https://travis-ci.org/chrisconley/houdini-gem.png?branch=master)](https://travis-ci.org/chrisconley/houdini-gem)
 # Overview
 
 This ruby gem is a Rails Engine for using the Houdini Mechanical Turk API. It provides easy integration into your models and sets up the necessary controllers to receive answers posted back to your app from Houdini.
 
-Check out the [Houdini Documentation](http://houdini.tenderapp.com/kb/developer-docs/api-v1) for more info about the API.
+Check out the [Houdini Documentation](http://support.houdiniapp.com/customer/portal/topics/409711-developer-docs/articles) for more info about the API.
 
 # Installation (Rails 3.x)
 
@@ -18,7 +19,7 @@ You may want to configure Houdini differently for each of you environments.
 
 # Example Usage
 
-Request a beta account at http://houdiniapi.com to gain access to the Houdini Blueprint Editor.
+Request a beta account at http://houdiniapp.com to gain access to the Houdini Blueprint Editor.
 
 Setup Houdini in your ActiveRecord model:
 
@@ -66,4 +67,4 @@ An example Rails 3.2 & Mongoid application can be found here: [https://github.co
 
 ## License
 
-MIT License. Copyright 2012 Houdini Inc. http://houdiniapi.com
+MIT License. Copyright 2013 Houdini Inc. http://houdiniapi.com
