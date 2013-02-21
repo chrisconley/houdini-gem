@@ -67,4 +67,4 @@ An example Rails 3.2 & Mongoid application can be found here: [https://github.co
 
 ## License
 
-MIT License. Copyright 2012 Houdini Inc. http://houdiniapi.com
+MIT License. Copyright 2013 Houdini Inc. http://houdiniapi.com
