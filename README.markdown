@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/chrisconley/houdini-gem.png?branch=master)](https://travis-ci.org/chrisconley/houdini-gem)
 # Overview
 
 This ruby gem is a Rails Engine for using the Houdini Mechanical Turk API. It provides easy integration into your models and sets up the necessary controllers to receive answers posted back to your app from Houdini.
