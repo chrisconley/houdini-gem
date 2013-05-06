@@ -1,6 +1,6 @@
 require 'cgi'
 class Houdini::PostbacksController < ApplicationController
-  skip_before_filter :protect_from_forgery
+  skip_before_filter :verify_authenticity_token
 
   def create
     task_results = HashWithIndifferentAccess.new ActiveSupport::JSON.decode(request.raw_post)
